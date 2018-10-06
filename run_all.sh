@@ -5,7 +5,7 @@ rm -f libcb.so
 gcc --shared cb.c -o libcb.so
 
 # Setting the spark_home
-#export PATH=$PATH:/path/to/spark/bin
+export PATH=$PATH:/path/to/spark/bin
 
 #Preprocessing
 spark-submit 01_preprocessing.py

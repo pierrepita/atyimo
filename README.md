@@ -1,13 +1,12 @@
 # Atyimo - Record Linkage Application for Heterogeneous Platforms
 
 # Requirements: 
-Java 8+
-Spark 2.1.x
-gcc
+Java 8+, Spark 2.1.x, gcc
 
 # Setup steps:
 1. Edit the config.py file
-2. Use the 'run_all.sh' script to execute the atyimo. 
+2. edit the line "export PATH=$PATH:/path/to/spark/bin" using the location of Apache Spark's installation
+3. Use the 'run_all.sh' script to execute the atyimo. 
 
 
 Authors
