@@ -1,6 +1,13 @@
 # Atyimo - Record Linkage Application for Heterogeneous Platforms
 
-[![DOI](https://zenodo.org/badge/113854567.svg)](https://zenodo.org/badge/latestdoi/113854567)
+# Requirements: 
+Java 8+
+Spark 2.1.x
+gcc
+
+# Setup steps:
+1. Edit the config.py file
+2. Use the 'run_all.sh' script to execute the atyimo. 
 
 
 Authors
