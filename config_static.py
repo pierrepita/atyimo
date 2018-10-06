@@ -11,10 +11,10 @@ from pyspark import SparkFiles
 pp_directory_padronized_files =	str(config.default_folder)+"standardized/"
 #Larger file
 #Larger file name after standardization
-pp_larger_output_file = str(pp_directory_padronized_files)+"larger_file_standardized.csv"
+pp_larger_output_file = str(pp_directory_padronized_files)+"larger_file_final.csv"
 #Smaller file
 #Smaller file name after standardization
-pp_smaller_output_file = str(pp_directory_padronized_files)+"smaller_file_standardized.csv"
+pp_smaller_output_file = str(pp_directory_padronized_files)+"smaller_file_final.csv"
 #Boolean indicating the existence of these variables in the larger base
 pp_larger_status_index = 1					#Index
 #Boolean indicating the existence of these variables in the smaller base

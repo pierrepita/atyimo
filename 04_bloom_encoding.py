@@ -303,11 +303,9 @@ def blockingAndBloom(line_received):
     try:
         cidade = str(line_received[col_mr])
     except Exception:
-	print line_received
-    cidade=""
-    #cidade = cidade.zfill(5)
-    #cidade = cidade[:4]
-   
+        print line_received
+        cidade=""
+
     nome = str(line_received[col_n])
     dataNascimento = str(line_received[col_bd])
     index = str(line_received[col_i])
@@ -315,7 +313,7 @@ def blockingAndBloom(line_received):
     nomeMae = str(line_received[col_mn])
 
     data = dataNascimento
-    print "nome: " + str(nome) + " dataNascimento: " + str(dataNascimento) + " index: " + str(index) + " sexo: " + str(sexo) + " nomeMae: " + str(nomeMae)
+#    print "nome: " + str(nome) + " dataNascimento: " + str(dataNascimento) + " index: " + str(index) + " sexo: " + str(sexo) + " nomeMae: " + str(nomeMae)
     missingFlag = 0
 
     if(status_name):
@@ -402,7 +400,7 @@ while(flagl or flags):
 	rounds = 1
     entradaRDD = sc.textFile(input_file, partitioning).cache()
     #cnt = entradaRDD.cache().count()
-    arquivoFinal = entradaRDD.map(blockingAndBloom).collect()#.map(writeFiles).collect()
+    arquivoFinal = entradaRDD.map(blockingAndBloom).map(writeFiles).collect()
 
 fim = time.time()
 approx_time = fim - ini

@@ -1,12 +1,10 @@
 #!/bin/env python
 # coding: utf-8
  
-# preprocessing.py: Standardize the variables in a data base
-# __author__ =      "Robespierre Dantas Rocha Pita and Clicia dos Santos Pinto"
-# emails =          robespierre.pita@ufba.br , cliciasp1@gmail.com
-# paper: https://dx.doi.org/10.1109/JBHI.2018.2796941 
-# AtyImoLab: http://www.atyimolab.ufba.br/
-
+# preprocessing.py:     Standardize the variables in a data base
+# __author__      =     "Clicia dos Santos Pinto and Robespierre Dantas Rocha Pita
+ 
+ 
 from pyspark import SparkContext, SparkConf
 from pyspark import SparkFiles
 from unicodedata import normalize
@@ -178,18 +176,25 @@ def set_variables_smaller():
     
 def cleaner(): #Serial execution
     print "MAIN PROGRAM MESSAGE (preprocessing):        In cleaner()"
-
     aux = get_file_name()
     output_local_aux = str(directory_padronizedfiles) +aux +"_ctmp_aux.csv"
     output_local_aux2 = str(directory_padronizedfiles) +aux +"_ctmp_aux2.csv"
-    output_local_aux3 = str(directory_padronizedfiles) +aux +"_ctmp_aux3.csv"
+    output_local_aux3 = str(directory_padronizedfiles) +aux +"_ctmp_aux3.csv"    
     output_local_clean = str(directory_padronizedfiles) +aux +"_tmp_clean.csv"
-    os.system("cp -fv " +input_file +" " +output_local_aux)
-    os.system("cp -fv " +output_local_aux +" " +output_local_aux2)
-    os.system("cp -fv " +output_local_aux2 +" " +output_local_clean)
-    os.system("cp -fv " +output_local_aux2  +" " +output_file)
+    
+    os.system("sed 'y/áÁàÀãÃâÂéÉêÊíÍóÓõÕôÔúÚçÇ/aAaAaAaAeEeEiIoOoOoOuUcC/' < " +input_file +" > " +output_local_aux)
+    os.system("sed -e's/  */ /g' < " +output_local_aux +" > " +output_local_aux2)
+    if(status_label):
+        os.system("sed '1d' " +output_local_aux2 +" > " +output_local_aux3)
+        os.system("mv " +output_local_aux3 +" " +output_local_aux2)
+    os.system("iconv -c -f utf-8 -t ascii " +output_local_aux2 +" > " +output_local_clean)
+    os.system("rm -f " +output_local_aux)
+    os.system("rm -f " +output_local_aux2)
+    if(status_label):
+        os.system("rm -f " +output_local_aux3)
+    #os.system("cp " +output_local_aux_aux  +" " +output_local)
+    #os.system("rm -f " +output_local_aux_aux)
 
- 
 def get_file_name():
 
     splited = input_file.split("/")
@@ -199,45 +204,45 @@ def get_file_name():
     return name
 
 def create_path():
-	print "MAIN PROGRAM MESSAGE (preprocessing):        In create_path"
-	global directory_padronizedfiles
-	directory_padronizedfiles = config_static.pp_directory_padronized_files
-	os.system("mkdir "+directory_padronizedfiles)
+    print "MAIN PROGRAM MESSAGE (preprocessing):        In create_path"
+    global directory_padronizedfiles
+    directory_padronizedfiles = config_static.pp_directory_padronized_files
+    os.system("mkdir "+directory_padronizedfiles)
 
 def add_index(): #Serial execution
-	print "MAIN PROGRAM MESSAGE (preprocessing):        In add_index"
-	input_local = get_file_name()
+    print "MAIN PROGRAM MESSAGE (preprocessing):        In add_index"
+    input_local = get_file_name()
 
-	final_output = str(directory_padronizedfiles) + input_local +"_with_index.csv"
+    final_output = str(directory_padronizedfiles) + input_local +"_with_index.csv"
 
-	input_local = str(directory_padronizedfiles) + input_local +"_tmp_clean.csv"
-	os.system("touch "+input_local)
-	output_local = get_file_name()
-	output_local = str(directory_padronizedfiles) + output_local +"_tmp_auxiliar.csv"
+    input_local = str(directory_padronizedfiles) + input_local +"_tmp_clean.csv"
+    os.system("touch "+input_local)
+    output_local = get_file_name()
+    output_local = str(directory_padronizedfiles) + output_local +"_tmp_auxiliar.csv"
 
-	if (status_index):
-		k = open(input_local, 'r')
-        	p = open(output_local, 'a')
-		count = 0
-		for row in k:
-			linha = row.split(";")
-			new = str(count)
-			for i in range(len(linha)):
-			    new += ";" + str(linha[i])
-			count +=1
-			#new += "\n"
-			p = open(output_local, 'a')
-			p.write(new)
-		p.close()
-		k.close()
+    if (status_index):
+        k = open(input_local, 'r')
+        #p = open(output_local, 'a')
+        count = 0
+        for row in k:
+            linha = row.split(";")
+            new = str(count)
+            for i in range(len(linha)):
+                new += ";" + str(linha[i])
+            count +=1
+            #new += "\n"
+            p = open(output_local, 'a')
+            p.write(new)
+        p.close()
+        k.close()
 
-		os.system("cp " +output_local + " " +final_output)
-		os.system("rm -f " +input_local)
-		os.system("rm -f " +output_local)
-		os.system("rm -f " +input_file)
+        os.system("cp " +output_local + " " +final_output)
+        os.system("rm -f " +input_local)
+        os.system("rm -f " +output_local)
+        os.system("rm -f " +input_file)
 
-		global base_file
-		base_file = final_output
+        global base_file
+        base_file = final_output
 
 def transform_name(name):
     
@@ -251,47 +256,47 @@ def transform_name(name):
     return name
 
 def get_month_number(mes):
-	mes = mes.upper()
-	trans_month = {
-		'JAN':1,
-		'FEV':2,
-		'MAR':3,
-		'ABR':4,
-		'MAI':5,
-		'JUN':6,
-		'JUL':7,
-		'AGO':8,
-		'SET':9,
-		'OUT':10,
-		'NOV':11,
-		'DEZ':12,
-		'FEB':2,
-		'MAR':3,
-		'APR':4,
-		'MAY':5,
-		'AUG':8,
-		'SEP':9,
-		'OCT':10,
-		'DEC':12,
-		'01':1,
-		'02':2,
-		'03':3,
-		'04':4,
-		'05':5,
-		'06':6,
-		'07':7,
-		'08':8,
-		'09':9,
-		'10':10,
-		'11':11,
-		'12':12,
-	}
+    mes = mes.upper()
+    trans_month = {
+        'JAN':1,
+        'FEV':2,
+        'MAR':3,
+        'ABR':4,
+        'MAI':5,
+        'JUN':6,
+        'JUL':7,
+        'AGO':8,
+        'SET':9,
+        'OUT':10,
+        'NOV':11,
+        'DEZ':12,
+        'FEB':2,
+        'MAR':3,
+        'APR':4,
+        'MAY':5,
+        'AUG':8,
+        'SEP':9,
+        'OCT':10,
+        'DEC':12,
+        '01':1,
+        '02':2,
+        '03':3,
+        '04':4,
+        '05':5,
+        '06':6,
+        '07':7,
+        '08':8,
+        '09':9,
+        '10':10,
+        '11':11,
+        '12':12,
+    }
 
-	try:
-		number_of_month = trans_month[mes]
-		return number_of_month
-	except Exception:
-		return 0
+    try:
+        number_of_month = trans_month[mes]
+        return number_of_month
+    except Exception:
+        return 0
  
 def transform_date(date):
 
@@ -337,7 +342,7 @@ def transform_date(date):
                 date = str(yeardate).zfill(4) + str(get_month_number(datesplited[1].zfill(2))).zfill(2)+ str(datesplited[0]).zfill(2)
 
             except Exception:
-                date = ""
+                date = "00000000"
         return date
 
     if (type_date4):
@@ -364,7 +369,7 @@ def transform_date(date):
                 date = str(yeardate).zfill(4) + str(get_month_number(datesplited[0].zfill(2))).zfill(2)+ str(datesplited[0]).zfill(2)
 
             except Exception:
-                date = ""
+                date = "00000000"
         return date
 
     if (type_date5):
@@ -391,7 +396,7 @@ def transform_date(date):
                 date = str(yeardate).zfill(4) + str(get_month_number(datesplited[0].zfill(2))).zfill(2)+ str(datesplited[1]).zfill(2)
 
             except Exception:
-                date = ""
+                date = "00000000"
         return date
 
 def transform_gender(gender):
@@ -484,7 +489,7 @@ def convert(line):
     if (status_gender):
         new_line += str(new_gender)
     new_line += "\n"
-    print new_line 
+   
     q.write(new_line)
     return 0
 
@@ -512,8 +517,6 @@ while(flagl or flags):
     #get_file_name()
     
     cleaner()
-    input_local = get_file_name()
-    base_file=str(directory_padronizedfiles) + input_local +"_with_index.csv"
     add_index()
 
     rdd_base_file = sc.textFile(base_file, partitioning)
