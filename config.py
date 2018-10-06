@@ -5,6 +5,7 @@
 status_larger_base = 1 #Boolean indicating execution of larger base
 status_smaller_base = 1 #Boolean indicating execution of small base
 default_folder = "results/" #main folder of each execution
+atyimo_path = "/home/pierre/Mega/atyimo_git/gitlab_pierrepita/atyimo/"
 
 ##----##----##----##----##----##----##----##----##----##----##----##----##----##--------##----##----##----##----##----##----
 # Set everything to be used in preprocessing module
