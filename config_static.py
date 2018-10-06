@@ -44,15 +44,6 @@ e_directory_block_smaller =  e_directory_blocks + "block_smaller/"
 #File name of blocking keys
 e_file_key_blocking = "keyBloking.txt"
 
-###Item position in the standardized files
-##e_col_i = 0 	#Index
-##e_col_n = 1 	#Name
-##e_col_mn = 2	#Mother name
-##e_col_bd = 3		#Birth date
-##e_col_g = 4		#Gender
-##e_col_mr = 5	#Municipality residence
-##e_col_st = 6	#State
-
 #Item position in the standardized files
 e_col_i = 0     #Index
 e_col_n = 2     #Name
@@ -61,16 +52,6 @@ e_col_bd =4             #Birth date
 e_col_g = 7             #Gender
 e_col_mr = 6    #Municipality residence
 e_col_st = -1   #State
-
-
-#Item position in the standardized files
-#e_col_i = 0     #Index
-#e_col_n = 1     #Name
-#e_col_mn = 2    #Mother name
-#e_col_bd = 3             #Birth date
-#e_col_g = 5             #Gender
-#e_col_mr = 4    #Municipality residence
-#e_col_st = -1   #State
 
 
 ##----##----##----##----##----##----##----##----##----##----##----##----##----##--------##----##----##----##----##----##----
@@ -127,14 +108,13 @@ dm_smaller_base_for_merge = pp_directory_padronized_files +"smaller_file_with_in
 ##----##----##----##----##----##----##----##----##----##----##----##----##----##--------##----##----##----##----##----##----
 # Set configuration to drive executions over Spark Framework
 # To see more about configuration alternatives: http://spark.apache.org/docs/latest/configuration.html
-pp_conf = SparkConf().setMaster('local[96]').setAppName('01_preprocessing').set('spark.executor.cores','4').set('spark.executor.memory','3g').set('spark.driver.memory','3g').set('spark.driver.maxResultSize', '10g').set('spark.eventLog.enabled','false')
-en_conf = SparkConf().setMaster('local[96]').setAppName('02_enconding_blocking').set('spark.executor.cores','4').set('spark.executor.memory','15g').set('spark.driver.memory','200g').set('spark.driver.maxResultSize', '40g').set('spark.eventLog.enabled','false')
-co_conf = SparkConf().setMaster('local[32]').setAppName('03_correlation').set("spark.executor.extraJavaOptions", "-XX:+UseG1GC").set('spark.executor.cores','1').set('spark.executor.memory','2g').set('spark.driver.memory','500g').set('spark.driver.maxResultSize','60g').set('spark.eventLog.enabled','false').set('spark.executor.heartbeatInterval','4900s').set('spark.network.timeout','10000000s')#.set("spark.storage.memoryFraction", "0.6").set("spark.shuffle.memoryFraction","0.2")
-#co_conf = SparkConf().setMaster('local[]').setAppName('03_correlation').set('spark.executor.cores','1').set('spark.executor.memory','1g').set('spark.driver.memory','1g').set('spark.driver.maxResultSize', '10g').set('spark.eventLog.enabled','false')
-dm_conf = SparkConf().setMaster('local[3]').setAppName('05_generatedm').set('spark.executor.cores','2').set('spark.executor.memory','3g').set('spark.driver.memory','3g').set('spark.driver.maxResultSize', '10g').set('spark.eventLog.enabled','false')
+pp_conf = SparkConf().setMaster('local[4]').setAppName('preprocessing').set('spark.executor.cores','4').set('spark.executor.memory','512M').set('spark.driver.memory','512M').set('spark.driver.maxResultSize', '512M').set('spark.eventLog.enabled','false')
+en_conf = SparkConf().setMaster('local[4]').setAppName('enconding').set('spark.executor.cores','4').set('spark.executor.memory','512M').set('spark.driver.memory','512M').set('spark.driver.maxResultSize', '512M').set('spark.eventLog.enabled','false')
+co_conf = SparkConf().setMaster('local[4]').setAppName('comparison').set("spark.executor.extraJavaOptions", "-XX:+UseG1GC").set('spark.executor.cores','1').set('spark.executor.memory','512M').set('spark.driver.memory','512M').set('spark.driver.maxResultSize','512M').set('spark.eventLog.enabled','false').set('spark.executor.heartbeatInterval','4900s').set('spark.network.timeout','10000000s')
+dm_conf = SparkConf().setMaster('local[4]').setAppName('datamart').set('spark.executor.cores','2').set('spark.executor.memory','512M').set('spark.driver.memory','512M').set('spark.driver.maxResultSize', '512M').set('spark.eventLog.enabled','false')
 # Set how much the RDD's of larger/smaller databases must be partitioned and parallelized
-larger_partitioning = 2048
-smaller_partitioning = 2048
+larger_partitioning = 64
+smaller_partitioning = 8
 
 #----##----##----##----##----##----##----##----##----##----##----##----##----##--------##----##----##----##----##----##----
 ##Set info to be used on extract step from second round 
