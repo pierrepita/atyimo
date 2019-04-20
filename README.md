@@ -1,5 +1,8 @@
 # Atyimo - Record Linkage Application for Heterogeneous Platforms
 
+# Description
+AtyImo implements a mixture of deterministic and probabilistic routines for data linkage. initially developed in 2013 to serve as a linkage tool supporting a joint Brazil–U.K. project aiming at building a large population-based cohort with data from more than 100 million participants and producing disease-specific data to facilitate diverse epidemiological research studies.
+
 # Requirements: 
 Java 8+, Spark 2.1.x, gcc
 
@@ -17,6 +20,8 @@ Robespierre Pita and Clicia Pinto and Marcos Barreto and Spiros Denaxas
 
 More information
 =================
+* PITA, Robespierre et al. [On the accuracy and scalability of probabilistic data linkage over the Brazilian 114 million cohort](https://ieeexplore.ieee.org/document/8293793). IEEE journal of biomedical and health informatics, v. 22, n. 2, p. 346-353, 2018.
+
 * Pita R., Mendonça E., Reis S., Barreto M., Denaxas S. (2017) [A Machine Learning Trainable Model to Assess the Accuracy of Probabilistic Record Linkage.](https://link.springer.com/chapter/10.1007/978-3-319-64283-3_16) In: Bellatreche L., Chakravarthy S. (eds) Big Data Analytics and Knowledge Discovery. DaWaK 2017. Lecture Notes in Computer Science, vol 10440. Springer.
 
 * PITA, Robespierre; PINTO, Clicia; MELO, Pedro; Silva, Malu; BARRETO, Marcos; RASELLA, Davide. (2015) [A Spark-based workflow for probabilistic record linkage of healthcare data. Workshop on Algorithms and Systems for MapReduce and Beyond](http://ceur-ws.org/Vol-1330/EDBTICDT-WS2015-complete.pdf) (BeyondMR - EDBT/ICDT 2015), Brussels.
